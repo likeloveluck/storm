@@ -51,8 +51,9 @@ public class Partition implements ISpoutPartition {
     @Override
     public String toString() {
         return "Partition{" +
-                "host=" + host +
-                ", partition=" + partition +
+                //"host=" + host +
+                //", partition=" + partition +
+                "partition=" + partition +
                 '}';
     }
 
