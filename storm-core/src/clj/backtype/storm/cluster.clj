@@ -135,7 +135,7 @@
   (remove-storm-base! [this storm-id])
   (set-assignment! [this storm-id info])
   (remove-storm! [this storm-id])
-  (report-error [this storm-id task-id error])
+  (report-error [this storm-id task-id node port error])
   (errors [this storm-id task-id])
   (disconnect [this]))
 
@@ -199,7 +199,7 @@
   (when ser
     (Utils/deserialize ser)))
 
-(defstruct TaskError :error :time-secs)
+(defstruct TaskError :error :time-secs :host :port)
 
 (defn- parse-error-path
   [^String p]
@@ -239,7 +239,7 @@
                          SUPERVISORS-ROOT (issue-callback! supervisors-callback)
                          STORMS-ROOT (issue-map-callback! storm-base-callback (first args))
                          ;; this should never happen
-                         (halt-process! 30 "Unknown callback for subtree " subtree args)))))]
+                         (exit-process! 30 "Unknown callback for subtree " subtree args)))))]
     (doseq [p [ASSIGNMENTS-SUBTREE STORMS-SUBTREE SUPERVISORS-SUBTREE WORKERBEATS-SUBTREE ERRORS-SUBTREE]]
       (mkdirs cluster-state p))
     (reify
@@ -362,9 +362,9 @@
         (remove-storm-base! this storm-id))
 
       (report-error
-        [this storm-id component-id error]
+        [this storm-id component-id node port error]
         (let [path (error-path storm-id component-id)
-              data {:time-secs (current-time-secs) :error (stringify-error error)}
+              data {:time-secs (current-time-secs) :error (stringify-error error) :host node :port port}
               _ (mkdirs cluster-state path)
               _ (create-sequential cluster-state (str path "/e") (Utils/serialize data))
               to-kill (->> (get-children cluster-state path false)
@@ -383,7 +383,7 @@
                             (let [data (-> (get-data cluster-state (str path "/" c) false)
                                            maybe-deserialize)]
                               (when data
-                                (struct TaskError (:error data) (:time-secs data))
+                                (struct TaskError (:error data) (:time-secs data) (:host data) (:port data))
                                 )))
               ]
           (->> (filter not-nil? errors)
