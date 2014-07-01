@@ -5,6 +5,14 @@
  * STORM-54: Per-Topology Classpath and Environment for Workers
  * STORM-355: excluding outdated netty transitively included via curator
  * STORM-183: Replacing RunTime.halt() with RunTime.exit()
+ * STORM-213: Decouple In-Process ZooKeeper from LocalCluster.
+ * STORM-365: Add support for Python 3 to storm command.
+ * STORM-332: Enable Kryo serialization in storm-kafka
+ * STORM-370: Add check for empty table before sorting dom in UI
+ * STORM-359: add logviewer paging and download
+ * STORM-372: Typo in storm_env.ini
+ * STORM-266: Adding shell process pid and name in the log message
+ * STORM-367: Storm UI REST api documentation.
 
 ## 0.9.2-incubating
  * STORM-66: send taskid on initial handshake
