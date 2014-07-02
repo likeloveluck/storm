@@ -49,4 +49,7 @@ public class KafkaConfig implements Serializable {
         this.clientId = clientId;
     }
 
+    public void setFetchSizeBytes(int fetchSizeBytes) {
+       this.fetchSizeBytes = fetchSizeBytes;
+    }
 }

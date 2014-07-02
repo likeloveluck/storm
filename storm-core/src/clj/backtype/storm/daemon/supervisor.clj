@@ -483,8 +483,11 @@
                                         (merge env {"LD_LIBRARY_PATH" jlp})
                                         {"LD_LIBRARY_PATH" jlp})
           logfilename (str "worker-" port ".log")
+          worker-childcgroup (when-let [s (conf WORKER-CHILDCGROUP)] 
+                                (.split s " "))
           command (concat
-                    [(java-cmd) "-server"]
+                    worker-childcgroup
+		    [(java-cmd) "-server"]
                     worker-childopts
                     topo-worker-childopts
                     [(str "-Djava.library.path=" jlp)
