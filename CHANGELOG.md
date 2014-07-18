@@ -14,6 +14,11 @@
  * STORM-266: Adding shell process pid and name in the log message
  * STORM-367: Storm UI REST api documentation.
  * STORM-200: Proposal for Multilang's Metrics feature
+ * STORM-351: multilang python process fall into endless loop
+ * STORM-375: Smarter downloading of assignments by supervisors and workers
+ * STORM-328: More restrictive Config checks, strict range check within Utils.getInt()
+ * STORM-381: Replace broken jquery.tablesorter.min.js to latest
+ * STORM-312: add storm monitor tools to monitor throughtput interactively
 
 ## 0.9.2-incubating
  * STORM-66: send taskid on initial handshake

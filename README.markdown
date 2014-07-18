@@ -149,6 +149,8 @@ under the License.
 * Parth-Brahmbhatt ([@Parth-Brahmbhatt](https://github.com/Parth-Brahmbhatt))
 * Adrian Petrescu ([@apetresc](https://github.com/apetresc))
 * DashengJu ([@dashengju](https://github.com/dashengju))
+* Jungtaek Lim ([@HeartSaVioR](https://github.com/HeartSaVioR))
+* Li Jiahong ([@Gvain](https://github.com/Gvain))
 
 ## Acknowledgements
 
