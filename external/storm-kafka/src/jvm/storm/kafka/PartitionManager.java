@@ -163,9 +163,12 @@ public class PartitionManager {
         _fetchAPILatencyMean.update(millis);
         _fetchAPICallCount.incr();
         if (msgs != null) {
+            int numFetchMsgs = 0;
             int numMessages = 0;
 
             for (MessageAndOffset msg : msgs) {
+                numFetchMsgs += 1;
+
                 final Long cur_offset = msg.offset();
                 if (cur_offset < offset) {
                     // Skip any old offsets.
@@ -182,6 +185,9 @@ public class PartitionManager {
                 }
             }
             _fetchAPIMessageCount.incrBy(numMessages);
+
+            LOG.debug("fill topic[" + _spoutConfig.topic + "] partition[" + _partition + "] " +
+                    "offset[" + offset + "] fetchCount[" + numFetchMsgs + "] validCount[" + numMessages + "]");
         }
     }
 
