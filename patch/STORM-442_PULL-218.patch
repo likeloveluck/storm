@@ -1,0 +1,46 @@
+From b35883daa1dbbdec6d10dd34630c2f8ea27d6833 Mon Sep 17 00:00:00 2001
+From: JuDasheng <judasheng@meituan.com>
+Date: Thu, 7 Aug 2014 17:08:11 +0800
+Subject: [PATCH] solve multilang ShellBolt/ShellSpout die() can be hang when
+ Exception happened
+
+---
+ storm-core/src/jvm/backtype/storm/spout/ShellSpout.java | 5 +++--
+ storm-core/src/jvm/backtype/storm/task/ShellBolt.java   | 5 +++--
+ 2 files changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/storm-core/src/jvm/backtype/storm/spout/ShellSpout.java b/storm-core/src/jvm/backtype/storm/spout/ShellSpout.java
+index 70bac5d..1408999 100644
+--- a/storm-core/src/jvm/backtype/storm/spout/ShellSpout.java
++++ b/storm-core/src/jvm/backtype/storm/spout/ShellSpout.java
+@@ -152,8 +152,9 @@ private void querySubprocess() {
+                 }
+             }
+         } catch (Exception e) {
+-            String processInfo = _process.getProcessInfoString() + _process.getProcessTerminationInfoString();
+-            throw new RuntimeException(processInfo, e);
++            LOG.error("Halting process: ShellSpout died.", e);
++            _collector.reportError(e);
++            System.exit(11);
+         }
+     }
+ 
+diff --git a/storm-core/src/jvm/backtype/storm/task/ShellBolt.java b/storm-core/src/jvm/backtype/storm/task/ShellBolt.java
+index 4f8bca5..7bf638b 100644
+--- a/storm-core/src/jvm/backtype/storm/task/ShellBolt.java
++++ b/storm-core/src/jvm/backtype/storm/task/ShellBolt.java
+@@ -290,8 +290,9 @@ private void handleMetrics(ShellMsg shellMsg) {
+     }
+ 
+     private void die(Throwable exception) {
+-        String processInfo = _process.getProcessInfoString() + _process.getProcessTerminationInfoString();
+-        _exception = new RuntimeException(processInfo, exception);
++        LOG.error("Halting process: ShellBolt died.", exception);
++        _collector.reportError(exception);
++        System.exit(11);
+     }
+ 
+ }
+-- 
+2.0.3
+
