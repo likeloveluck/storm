@@ -1,4 +1,9 @@
 ## 0.9.3-incubating
+ * STORM-279: cluster.xml doesn't take in STORM_LOG_DIR values.
+ * STORM-380: Kafka spout: throw RuntimeException if a leader cannot be found for a partition
+ * STORM-435: Improve storm-kafka documentation
+ * STORM-405: Add kafka trident state so messages can be sent to kafka topic
+ * STORM-211: Add module for HDFS integration
  * STORM-337: Expose managed spout ids publicly
  * STORM-320: Support STORM_CONF_DIR environment variable to support
  * STORM-360: Add node details for Error Topology and Component pages
@@ -37,6 +42,14 @@
  * STORM-369: topology summary page displays wrong order.
  * STORM-350: LMAX Disruptor 3.2.1
  * STORM-239: Allow supervisor to operate in paths with spaces in them
+ * STORM-87: fail fast on ShellBolt exception
+ * STORM-417: Storm UI lost table sort style when tablesorter was updated
+ * STORM-396: Replace NullPointerException with IllegalArgumentExeption
+ * STORM-451: Latest storm does not build due to a pom.xml error in storm-hdfs pom.xml
+ * STORM-453: migrated to curator 2.5.0
+ * STORM-458: sample spout uses incorrect name when connecting bolt
+ * STORM-455: Report error-level messages from ShellBolt children
+ * STORM-443: multilang log's loglevel protocol can cause hang
 
 ## 0.9.2-incubating
  * STORM-66: send taskid on initial handshake
