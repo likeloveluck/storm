@@ -482,7 +482,7 @@
                                   (let [time-delta (if start-time-ms (time-delta-ms start-time-ms))]
                                     (condp = stream-id
                                       ACKER-ACK-STREAM-ID (do 
-                                                            (ack-spout-msg executor-data (get task-datas task-id)
+							    (ack-spout-msg executor-data (get task-datas task-id)
                                                                          spout-id tuple-finished-info time-delta id)
                                                             (when debug?
                                                               (log-message "Component[" component-id "] ACK-TUPLE reason[RECV] TupleId[" id "] values[" tuple-finished-info "]"))
@@ -746,13 +746,14 @@
                                                                             (fast-list-iter [root-id root-ids]
                                                                                             (put-xor! anchors-to-ids root-id edge-id))
                                                                             ))))
-                                                      (transfer-fn t out-tuple overflow-buffer)
+                                                      (transfer-fn t 
+								   out-tuple 
+								   overflow-buffer)
                                                       (when debug? 
                                                         (if (= component-id "__acker")
                                                           (log-message "Component[" component-id "] Type[EMIT] to Stream[" stream "] TupleId[" (.get values 0) "]")
                                                           (log-message "Component[" component-id "] Type[EMIT] to Stream[" stream "] TupleId[" (.getMessageId out-tuple) "] values[" values "]")
                                                           )
-                                                        
                                                         )
                                                       ))
                                     (or out-tasks [])))]]
