@@ -126,8 +126,7 @@
         emit-sampler (mk-stats-sampler storm-conf)
         stream->component->grouper (:stream->component->grouper executor-data)
         user-context (:user-context task-data)
-        executor-stats (:stats executor-data)
-        debug? (= true (storm-conf TOPOLOGY-DEBUG))]
+        executor-stats (:stats executor-data)]
         
     (fn ([^Integer out-task-id ^String stream ^List values]
           (when debug?

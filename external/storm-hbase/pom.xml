@@ -21,11 +21,10 @@
     <parent>
         <artifactId>storm</artifactId>
         <groupId>org.apache.storm</groupId>
-        <version>0.9.3-mt0000</version>
+        <version>0.9.3-mt0001</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <groupId>com.github.ptgoetz</groupId>
     <artifactId>storm-hbase</artifactId>
 
     <developers>
