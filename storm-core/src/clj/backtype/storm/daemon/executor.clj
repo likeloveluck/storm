@@ -460,8 +460,7 @@
                    (expire [this id [task-id spout-id tuple-info start-time-ms]]
                      (let [time-delta (if start-time-ms (time-delta-ms start-time-ms))]
                        (fail-spout-msg executor-data (get task-datas task-id) spout-id tuple-info time-delta "TIMEOUT" id)
-                       (when debug? 
-                         (log-message "Component[" component-id "] FAILED-TUPLE reason[EXPIRED] TupleId[" msg-id "] values[" tuple-info "]"))
+                       (when debug? (log-message "Component[" component-id "] FAILED-TUPLE reason[EXPIRED] TupleId[" id "] values[" tuple-info "]"))
                        ))))
         tuple-action-fn (fn [task-id ^TupleImpl tuple]
                           (let [stream-id (.getSourceStreamId tuple)
@@ -749,12 +748,12 @@
                                                       (transfer-fn t 
 								   out-tuple 
 								   overflow-buffer)
-                                                      (when debug? 
-                                                        (if (= component-id "__acker")
-                                                          (log-message "Component[" component-id "] Type[EMIT] to Stream[" stream "] TupleId[" (.get values 0) "]")
-                                                          (log-message "Component[" component-id "] Type[EMIT] to Stream[" stream "] TupleId[" (.getMessageId out-tuple) "] values[" values "]")
-                                                          )
-                                                        )
+                                                      ;;(when debug? 
+                                                      ;;  (if (= component-id "__acker")
+                                                      ;;    (log-message "Component[" component-id "] Type[EMIT] to Stream[" stream "] TupleId[" (.get values 0) "]")
+                                                      ;;    (log-message "Component[" component-id "] Type[EMIT] to Stream[" stream "] TupleId[" (.getMessageId out-tuple) "] values[" values "]")
+                                                      ;;    )
+                                                      ;;  )
                                                       ))
                                     (or out-tasks [])))]]
           (builtin-metrics/register-all (:builtin-metrics task-data) storm-conf user-context)

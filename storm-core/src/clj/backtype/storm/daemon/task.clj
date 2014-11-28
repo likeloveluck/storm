@@ -126,15 +126,15 @@
         emit-sampler (mk-stats-sampler storm-conf)
         stream->component->grouper (:stream->component->grouper executor-data)
         user-context (:user-context task-data)
-        executor-stats (:stats executor-data)]
+        executor-stats (:stats executor-data)
+	debug? (= true (storm-conf TOPOLOGY-DEBUG))]
         
     (fn ([^Integer out-task-id ^String stream ^List values]
-          (when debug?
-            (log-message "Component[" component-id "] Type[EMIT] to Stream[" stream "] TupleId[" values "]"))
           (let [target-component (.getComponentId worker-context out-task-id)
                 component->grouping (get stream->component->grouper stream)
                 grouping (get component->grouping target-component)
                 out-task-id (if grouping out-task-id)]
+            (when debug? (log-message "Component[" component-id "] Type[EMIT] to Stream[" stream "] TupleId[" values "]"))
             (when (and (not-nil? grouping) (not= :direct grouping))
               (throw (IllegalArgumentException. "Cannot emitDirect to a task expecting a regular grouping")))                          
             (apply-hooks user-context .emit (EmitInfo. values stream task-id [out-task-id]))
@@ -147,9 +147,8 @@
             (if out-task-id [out-task-id])
             ))
         ([^String stream ^List values]
-           (when debug?
-             (log-message "Component[" component-id "] Type[EMIT] to Stream[" stream "] TupleId[" values "]"))
            (let [out-tasks (ArrayList.)]
+             (when debug? (log-message "Component[" component-id "] Type[EMIT] to Stream[" stream "] TupleId[" values "]"))
              (fast-map-iter [[out-component grouper] (get stream->component->grouper stream)]
                (when (= :direct grouper)
                   ;;  TODO: this is wrong, need to check how the stream was declared
