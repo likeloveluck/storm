@@ -20,6 +20,8 @@ package org.apache.storm.hbase.security;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.security.UserProvider;
 import org.apache.hadoop.security.UserGroupInformation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -30,17 +32,22 @@ import java.util.Map;
  * with secured HBase.
  */
 public class HBaseSecurityUtil {
+    private static final Logger logger = LoggerFactory.getLogger(HBaseSecurityUtil.class);
+
     public static final String STORM_KEYTAB_FILE_KEY = "storm.keytab.file";
     public static final String STORM_USER_NAME_KEY = "storm.kerberos.principal";
 
     public static UserProvider login(Map conf, Configuration hbaseConfig) throws IOException {
         UserProvider provider = UserProvider.instantiate(hbaseConfig);
+        logger.info("=== UserGroupInformation.isSecurityEnabled() [" + UserGroupInformation.isSecurityEnabled() + "]");
         if (UserGroupInformation.isSecurityEnabled()) {
             String keytab = (String) conf.get(STORM_KEYTAB_FILE_KEY);
+            logger.info("=== keytab[" + keytab + "]");
             if (keytab != null) {
                 hbaseConfig.set(STORM_KEYTAB_FILE_KEY, keytab);
             }
             String userName = (String) conf.get(STORM_USER_NAME_KEY);
+            logger.info("=== userName[" + userName + "]");
             if (userName != null) {
                 hbaseConfig.set(STORM_USER_NAME_KEY, userName);
             }
