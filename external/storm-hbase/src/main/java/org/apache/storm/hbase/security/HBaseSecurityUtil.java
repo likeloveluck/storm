@@ -42,7 +42,7 @@ public class HBaseSecurityUtil {
         logger.info("=== UserGroupInformation.isSecurityEnabled() [" + UserGroupInformation.isSecurityEnabled() + "] " +
                 "userProvider.isHadoopSecurityEnabled() [" + provider.isHadoopSecurityEnabled() + "] " +
                 "userProvider.isHBaseSecurityEnabled() [" + provider.isHBaseSecurityEnabled() + "]");
-        if (UserGroupInformation.isSecurityEnabled()) {
+        if (provider.isHBaseSecurityEnabled()) {
             String keytab = (String) conf.get(STORM_KEYTAB_FILE_KEY);
             logger.info("=== keytab[" + keytab + "]");
             if (keytab != null) {
