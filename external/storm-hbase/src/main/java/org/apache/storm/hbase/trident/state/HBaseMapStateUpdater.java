@@ -46,7 +46,7 @@ public class HBaseMapStateUpdater implements StateUpdater<MapState> {
             Object value = tupleMapper.getValueFromTridentTuple(tuple);
             keys.add(new Values(key));
             updaters.add(new HBaseMapStateValueUpdater(value));
-            logger.info("HBaseMapStateUpdater update key[" + key + "] value[" + value + "]");
+            logger.info("HBaseMapStateUpdater key[" + key + "] value[" + value + "]");
         }
         state.multiUpdate(keys, updaters);
     }

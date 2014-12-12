@@ -189,7 +189,7 @@ public class HBaseMapState<T> implements IBackingMap<T> {
     public List<T> multiGet(List<List<Object>> keys) {
         List<Get> gets = new ArrayList<Get>();
         for(List<Object> key : keys){
-            LOG.info("multiGet Partition: {}, GET: {}", this.partitionNum, key);
+            LOG.debug("multiGet Partition: {}, GET: {}", this.partitionNum, key);
             Get get = new Get(toRowKey(key));
             get.addColumn(this.options.columnFamily.getBytes(), this.options.qualifier.getBytes());
             gets.add(get);
@@ -216,7 +216,7 @@ public class HBaseMapState<T> implements IBackingMap<T> {
     public void multiPut(List<List<Object>> keys, List<T> values) {
         List<Put> puts = new ArrayList<Put>(keys.size());
         for (int i = 0; i < keys.size(); i++) {
-            LOG.info("multiPut Partiton: {}, Key: {}, Value: {}", new Object[]{this.partitionNum, keys.get(i), new String(this.serializer.serialize(values.get(i)))});
+            LOG.debug("multiPut Partiton: {}, Key: {}, Value: {}", new Object[]{this.partitionNum, keys.get(i), new String(this.serializer.serialize(values.get(i)))});
             Put put = new Put(toRowKey(keys.get(i)));
             T val = values.get(i);
             put.add(this.options.columnFamily.getBytes(),
