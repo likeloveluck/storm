@@ -1,6 +1,7 @@
 package org.apache.storm.hbase.trident.state;
 
 import backtype.storm.tuple.Values;
+import org.apache.storm.hbase.trident.mapper.TridentTupleMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import storm.trident.operation.TridentCollector;
@@ -20,9 +21,9 @@ import java.util.Map;
 public class HBaseMapStateUpdater implements StateUpdater<MapState> {
     private static Logger logger = LoggerFactory.getLogger(HBaseMapStateUpdater.class);
 
-    HBaseMapStateTupleMapper tupleMapper;
+    TridentTupleMapper tupleMapper;
 
-    public HBaseMapStateUpdater(HBaseMapStateTupleMapper tupleExtractor) {
+    public HBaseMapStateUpdater(TridentTupleMapper tupleExtractor) {
         this.tupleMapper = tupleExtractor;
     }
 
