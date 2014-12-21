@@ -1,11 +1,12 @@
 package org.apache.storm.hbase.trident.mapper;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by judasheng on 14-12-19.
  */
-public interface TridentHBaseMapMapper {
+public interface TridentHBaseMapMapper extends Serializable {
     /**
      * Given a tuple's grouped key list, return the HBase rowkey.
      *
