@@ -39,8 +39,8 @@ public class HBaseSecurityUtil {
 
     public static UserProvider login(Map conf, Configuration hbaseConfig) throws IOException {
         UserProvider provider = UserProvider.instantiate(hbaseConfig);
-        logger.info("=== UserGroupInformation.isSecurityEnabled() [" + UserGroupInformation.isSecurityEnabled() + "]");
-        if (UserGroupInformation.isSecurityEnabled()) {
+        if (provider.isHBaseSecurityEnabled()) {
+            /*
             String keytab = (String) conf.get(STORM_KEYTAB_FILE_KEY);
             logger.info("=== keytab[" + keytab + "]");
             if (keytab != null) {
@@ -50,7 +50,9 @@ public class HBaseSecurityUtil {
             logger.info("=== userName[" + userName + "]");
             if (userName != null) {
                 hbaseConfig.set(STORM_USER_NAME_KEY, userName);
-            }
+            }*/
+            logger.info("=== hbaseConfig.get(STORM_KEYTAB_FILE_KEY)[" + hbaseConfig.get(STORM_KEYTAB_FILE_KEY) + "] " +
+                    "hbaseConfig.get(STORM_USER_NAME_KEY)[" + hbaseConfig.get(STORM_USER_NAME_KEY)+ "]");
             provider.login(STORM_KEYTAB_FILE_KEY, STORM_USER_NAME_KEY, 
                 InetAddress.getLocalHost().getCanonicalHostName());
         }
