@@ -213,7 +213,7 @@ public class HBaseMapState2<T> implements IBackingMap<T> {
             byte[] hbaseKey = this.options.mapMapper.rowKey(key);
             String qualifier = this.options.mapMapper.qualifier(key);
 
-            LOG.debug("multiGet Partition: {}, Key: {}, Qualifier: {}", this.partitionNum, String.valueOf(hbaseKey), qualifier);
+            LOG.debug("multiGet Partition: {}, Key: {}, Qualifier: {}", this.partitionNum, new String(hbaseKey), qualifier);
             Get get = new Get(hbaseKey);
             get.addColumn(this.options.columnFamily.getBytes(), qualifier.getBytes());
             gets.add(get);
@@ -246,7 +246,7 @@ public class HBaseMapState2<T> implements IBackingMap<T> {
             byte[] hbaseKey = this.options.mapMapper.rowKey(keys.get(i));
             String qualifier = this.options.mapMapper.qualifier(keys.get(i));
             LOG.info("multiPut Partiton: {}, Key: {}, Qualifier: {}, Value: {}",
-                    new Object[]{this.partitionNum, String.valueOf(hbaseKey), qualifier,
+                    new Object[]{this.partitionNum, new String(hbaseKey), qualifier,
                             new String(this.serializer.serialize(values.get(i)))});
             Put put = new Put(hbaseKey);
             T val = values.get(i);
