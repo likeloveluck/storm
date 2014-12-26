@@ -234,9 +234,13 @@ public class HBaseMapState<T> implements IBackingMap<T> {
     public void multiPut(List<List<Object>> keys, List<T> values) {
         List<Put> puts = new ArrayList<Put>(keys.size());
         for (int i = 0; i < keys.size(); i++) {
+<<<<<<< HEAD
             LOG.info("multiPut Partiton: {}, Key: {}, Qualifier: {}, Value: {}",
                     new Object[]{this.partitionNum, keys.get(i), this.options.qualifier,
                             new String(this.serializer.serialize(values.get(i)))});
+=======
+            LOG.debug("multiPut Partiton: {}, Key: {}, Value: {}", new Object[]{this.partitionNum, keys.get(i), new String(this.serializer.serialize(values.get(i)))});
+>>>>>>> 6e0369bae836cbe3b2abd4b3831d3d03ae608e6d
             Put put = new Put(toRowKey(keys.get(i)));
             T val = values.get(i);
             put.add(this.options.columnFamily.getBytes(),
